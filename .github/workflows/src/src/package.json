@@ -1,0 +1,7 @@
+{
+  "name": "fire-crawl-repo",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "ts-node src/fetchJobs.ts"
+  }
+}
