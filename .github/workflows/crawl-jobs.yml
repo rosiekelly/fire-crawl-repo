@@ -25,4 +25,4 @@ jobs:
       - name: Run crawler
         env:
           FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
-        run: npx ts-node src/fetchJobs.ts
+        run: npx ts-node --loader ts-node/esm src/fetchJobs.ts
