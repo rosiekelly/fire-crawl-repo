@@ -1,5 +1,5 @@
 import fetch from 'node-fetch';
-import fs from 'fs';
+import fs from 'node:fs/promises';
 
 const API_KEY = process.env.FIRECRAWL_API_KEY;
 if (!API_KEY) {
@@ -58,7 +58,7 @@ async function main() {
       .map(cleanJob)
       .filter((job): job is CleanJob => !!job);
 
-    fs.writeFileSync('jobs.json', JSON.stringify(cleanJobs, null, 2));
+    await fs.writeFile('jobs.json', JSON.stringify(cleanJobs, null, 2));
     console.log(`Saved ${cleanJobs.length} Barclays jobs to jobs.json`);
   } catch (e) {
     console.error('Failed to fetch or clean jobs:', e);
