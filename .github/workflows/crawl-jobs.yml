@@ -1,0 +1,28 @@
+name: Crawl and Clean Jobs
+
+on:
+  schedule:
+    - cron: '0 9 * * *'  # Every day at 9 AM UTC
+  workflow_dispatch:
+
+jobs:
+  crawl:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: |
+          npm install node-fetch openai dotenv
+          npm install --save-dev typescript ts-node @types/node
+
+      - name: Run crawler
+        env:
+          FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
+        run: npx ts-node src/fetchJobs.ts
