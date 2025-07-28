@@ -20,9 +20,9 @@ jobs:
       - name: Install dependencies
         run: |
           npm install node-fetch openai dotenv
-          npm install --save-dev typescript ts-node @types/node
+          npm install --save-dev ts-node@latest typescript @types/node
 
       - name: Run crawler
         env:
           FIRECRAWL_API_KEY: ${{ secrets.FIRECRAWL_API_KEY }}
-        run: npx ts-node --loader ts-node/esm src/fetchJobs.ts
+        run: npx ts-node src/fetchJobs.ts
