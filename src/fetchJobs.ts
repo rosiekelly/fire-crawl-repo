@@ -36,7 +36,7 @@ function cleanJob(raw: RawJob): CleanJob | null {
 
 async function main() {
   try {
-    const res = await fetch('https://api.firecrawl.dev/v1/search', {
+    const data = (await (await fetch('https://api.firecrawl.dev/v1/search', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${API_KEY}`,
@@ -46,13 +46,8 @@ async function main() {
         query,
         maxResults: 20
       })
-    });
+    })).json()) as { results?: RawJob[] };
 
-    if (!res.ok) {
-      throw new Error(`Firecrawl API returned ${res.status}: ${res.statusText}`);
-    }
-
-    const data = await res.json();
     const rawJobs: RawJob[] = data.results ?? [];
     const cleanJobs: CleanJob[] = rawJobs
       .map(cleanJob)
