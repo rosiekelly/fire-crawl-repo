@@ -36,7 +36,7 @@ function cleanJob(raw: RawJob): CleanJob | null {
 
 async function main() {
   try {
-    const data = (await (await fetch('https://api.firecrawl.dev/v1/search', {
+    const response = await fetch('https://api.firecrawl.dev/v1/search', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${API_KEY}`,
@@ -46,8 +46,10 @@ async function main() {
         query,
         maxResults: 20
       })
-    })).json()) as { results?: RawJob[] };
+    });
 
+    // Explicitly assert the type here for TypeScript compatibility
+    const data = (await response.json()) as { results?: RawJob[] };
     const rawJobs: RawJob[] = data.results ?? [];
     const cleanJobs: CleanJob[] = rawJobs
       .map(cleanJob)
