@@ -1,0 +1,8 @@
+{
+  "name": "firecrawl-job-scraper",
+  "type": "module",
+  "main": "src/fetchJobs.ts",
+  "dependencies": {
+    "node-fetch": "^3.3.2"
+  }
+}
